@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>無缺會 — 무결회 성전 기록소</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-hanji: #F8F5EE;
+      --bg-hanji-deep: #EFE9DC;
+      --crimson: #7B1113;
+      --crimson-dark: #4E090B;
+      --crimson-soft: #A63A3C;
+      --gold: #A88438;
+      --gold-light: #D4B774;
+      --ink: #1C1917;
+      --ink-muted: #57534E;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Serif KR', 'Gowun Batang', serif;
+      background-color: var(--bg-hanji);
+      color: var(--ink);
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 20% 15%, rgba(168, 132, 56, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 80% 85%, rgba(123, 17, 19, 0.06) 0%, transparent 50%),
+        repeating-linear-gradient(0deg, rgba(168, 132, 56, 0.025) 0px, rgba(168, 132, 56, 0.025) 1px, transparent 1px, transparent 32px),
+        repeating-linear-gradient(90deg, rgba(168, 132, 56, 0.02) 0px, rgba(168, 132, 56, 0.02) 1px, transparent 1px, transparent 32px);
+    }
+
+    .font-classic {
+      font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif;
+    }
+
+    .writing-vertical-lr {
+      writing-mode: vertical-lr;
+      text-orientation: upright;
+      word-break: keep-all;
+      overflow-wrap: normal;
+    }
+
+    .oriental-border {
+      border: 1px solid rgba(184, 138, 62, 0.5);
+      box-shadow: inset 0 0 0 4px #F8F5EE, inset 0 0 0 5px rgba(122, 21, 21, 0.24);
+    }
+
+    .hanji-card {
+      background: linear-gradient(165deg, #FCFBF7 0%, #F5EFE2 100%);
+      border: 1px solid rgba(168, 132, 56, 0.35);
+      box-shadow: 0 12px 35px -10px rgba(45, 22, 18, 0.14), inset 0 0 30px rgba(168, 132, 56, 0.07);
+    }
+
+    .letter-paper {
+      background: linear-gradient(180deg, #FDFBF6 0%, #F6EFE0 100%);
+      border: 1px solid rgba(168, 132, 56, 0.45);
+      box-shadow:
+        0 25px 60px -15px rgba(35, 10, 10, 0.25),
+        0 0 0 6px #FAF6ED,
+        0 0 0 7px rgba(123, 17, 19, 0.22);
+      position: relative;
+    }
+
+    .letter-lines {
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 35px,
+        rgba(168, 132, 56, 0.2) 36px
+      );
+    }
+
+    .wax-seal-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), filter 0.28s ease;
+      filter: drop-shadow(0 10px 14px rgba(58, 7, 9, 0.42));
+    }
+
+    .wax-seal-btn:hover {
+      transform: scale(1.06) rotate(-2deg);
+      filter: drop-shadow(0 14px 20px rgba(78, 9, 11, 0.55));
+    }
+
+    .wax-seal-btn:active {
+      transform: scale(0.97);
+    }
+
+    .circle-stamp {
+      border-radius: 9999px;
+      border: 1.5px solid var(--crimson);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--crimson);
+      background: rgba(123, 17, 19, 0.04);
+      box-shadow: inset 0 0 0 2px #F8F5EE, inset 0 0 0 3px rgba(123, 17, 19, 0.35);
+    }
+
+    .focus-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      background: rgba(244, 239, 230, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      animation: fadeIn 0.22s ease forwards;
+      cursor: pointer;
+    }
+
+    .focus-card-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 910;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      cursor: pointer;
+    }
+
+    .focus-card-box {
+      cursor: default;
+      animation: popIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.93) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes nodePulse {
+      0%, 100% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(1.26); opacity: 1; }
+    }
+    .node-pulse {
+      animation: nodePulse 2.6s infinite ease-in-out;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+
+    @keyframes wheelSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .sacred-wheel {
+      animation: wheelSpin 95s linear infinite;
+      transform-origin: center;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F1ECE1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(123, 17, 19, 0.35);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-[#7B1113] selection:text-[#F8F5EE]">
+
+  <!-- 동기화 상태 토스트 -->
+  <div id="sync-toast" class="hidden fixed bottom-5 right-5 z-[990] bg-[#1C1917] text-[#F8F5EE] text-xs px-4 py-2.5 rounded-sm shadow-lg border border-[#A88438]/50 tracking-wider">
+    성전 기록 동기화 중...
+  </div>
+
+  <!-- ==================== 1. 본인 인증 ==================== -->
+  <div id="auth-screen" class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-[#F4EFE4]/95">
+    <div class="letter-paper w-full max-w-xl rounded-sm p-7 sm:p-11 my-auto">
+      <div class="absolute top-3 left-3 w-5 h-5 border-t border-l border-[#A88438]/60 pointer-events-none"></div>
+      <div class="absolute top-3 right-3 w-5 h-5 border-t border-r border-[#A88438]/60 pointer-events-none"></div>
+      <div class="absolute bottom-3 left-3 w-5 h-5 border-b border-l border-[#A88438]/60 pointer-events-none"></div>
+      <div class="absolute bottom-3 right-3 w-5 h-5 border-b border-r border-[#A88438]/60 pointer-events-none"></div>
+
+      <div class="flex items-center justify-between border-b border-[#A88438]/35 pb-5 mb-6">
+        <div class="flex items-center gap-3.5">
+          <div class="circle-stamp w-12 h-12 font-bold text-lg tracking-tighter select-none">
+            無缺
+          </div>
+          <div>
+            <p class="text-xs tracking-[0.28em] text-[#A88438] font-semibold">聖殿封書 · 성전 봉서</p>
+            <h1 class="text-xl sm:text-2xl font-bold tracking-[0.18em] text-[#7B1113] mt-0.5">無缺會 門前審問</h1>
+          </div>
+        </div>
+        <span class="text-xs text-[#78716C] tracking-widest border border-[#A88438]/40 px-2.5 py-1 rounded-full">
+          祕密結社
+        </span>
+      </div>
+
+      <div class="letter-lines py-2 px-1 space-y-5 text-sm sm:text-[15px] leading-[36px] text-[#292524]">
+        <p>
+          속세의 껍데기를 벗고 온전한 육신과 영혼에 닿고자 하는 이여, 이곳은 오직 허락된 발걸음만을 들이는 <span class="text-[#7B1113] font-semibold">무결회(無缺會)</span>의 내밀한 기록소입니다.
+        </p>
+        <p>
+          그대의 이름이 이미 성전의 명부에 새겨져 있다면 <span class="underline decoration-[#A88438] underline-offset-4">본명</span>을 적으시고, 아직 이름을 올리지 못한 순례자라면 인도자에게 전해 들은 <span class="text-[#7B1113] font-semibold">천당의 부호(到天堂)</span>를 아래 서신에 기입하십시오.
+        </p>
+      </div>
+
+      <form id="auth-form" class="mt-6 pt-4 border-t border-[#A88438]/30">
+        <label for="auth-input" class="block text-xs tracking-[0.2em] text-[#57534E] mb-2">
+          신원 성명 또는 성전 부호 (記名 / 符號)
+        </label>
+        <div class="relative">
+          <input
+            id="auth-input"
+            type="text"
+            autocomplete="off"
+            placeholder="성명 또는 到天堂 입력..."
+            class="w-full bg-transparent border-b-2 border-[#7B1113]/50 focus:border-[#7B1113] py-2.5 px-2 text-lg tracking-[0.15em] text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none transition-colors"
+          />
+        </div>
+
+        <p id="auth-error" class="text-xs text-[#7B1113] mt-2 min-h-[18px] font-medium"></p>
+
+        <div class="mt-3 flex items-end justify-between gap-4">
+          <div class="text-[11px] text-[#78716C] leading-relaxed">
+            <p>※ 일반 신도 부호: <button type="button" onclick="fillDemoCode('到天堂')" class="text-[#7B1113] font-semibold underline underline-offset-2 hover:text-[#4E090B]">到天堂</button></p>
+            <p class="mt-0.5">※ 교단 기록 열람 시 외부 유출을 엄금함</p>
+          </div>
+
+          <button type="submit" title="인장을 눌러 봉인 해제" class="wax-seal-btn shrink-0 group relative" aria-label="봉인 해제">
+            <svg width="96" height="114" viewBox="0 0 160 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="waxBody" cx="38%" cy="30%" r="68%">
+                  <stop offset="0%" stop-color="#9A1B1E" />
+                  <stop offset="55%" stop-color="#6E0D10" />
+                  <stop offset="88%" stop-color="#4B0709" />
+                  <stop offset="100%" stop-color="#360405" />
+                </radialGradient>
+                <linearGradient id="waxRimHighlight" x1="20" y1="15" x2="140" y2="175" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#C94A4D" stop-opacity="0.7" />
+                  <stop offset="45%" stop-color="#7B1113" stop-opacity="0.1" />
+                  <stop offset="100%" stop-color="#2B0304" stop-opacity="0.85" />
+                </linearGradient>
+                <linearGradient id="goldLeaf" x1="40" y1="30" x2="120" y2="160" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#F3DF9E" />
+                  <stop offset="45%" stop-color="#CFA855" />
+                  <stop offset="80%" stop-color="#9A7328" />
+                  <stop offset="100%" stop-color="#E5C87B" />
+                </linearGradient>
+              </defs>
+
+              <path d="M81 10C119 10 148 42 150 86C152 132 124 178 80 180C36 182 10 140 11 92C12 45 42 10 81 10Z" fill="url(#waxBody)" />
+              <path d="M81 10C119 10 148 42 150 86C152 132 124 178 80 180C36 182 10 140 11 92C12 45 42 10 81 10Z" stroke="url(#waxRimHighlight)" stroke-width="4" />
+              <ellipse cx="80" cy="95" rx="54" ry="68" fill="#5D0A0D" stroke="#3D0506" stroke-width="2" />
+              <ellipse cx="80" cy="95" rx="51" ry="65" stroke="url(#goldLeaf)" stroke-width="2.2" />
+              <ellipse cx="80" cy="95" rx="46" ry="59" stroke="url(#goldLeaf)" stroke-width="1.3" />
+
+              <g stroke="url(#goldLeaf)" stroke-linecap="round">
+                <line x1="80" y1="36" x2="80" y2="58" stroke-width="2.2" />
+                <line x1="36" y1="84" x2="58" y2="84" stroke-width="2" />
+                <line x1="102" y1="84" x2="124" y2="84" stroke-width="2" />
+                <line x1="48" y1="56" x2="63" y2="69" stroke-width="1.8" />
+                <line x1="112" y1="56" x2="97" y2="69" stroke-width="1.8" />
+                <line x1="50" y1="102" x2="64" y2="93" stroke-width="1.6" />
+                <line x1="110" y1="102" x2="96" y2="93" stroke-width="1.6" />
+                <path d="M58 83C57 68 68 58 80 58C92 58 103 68 102 83C101 94 93 101 80 101C67 101 59 94 58 83Z" stroke-width="2.1" stroke-dasharray="5 3 8 2" />
+                <path d="M62 82C62 70 70 62 80 62C90 62 98 70 98 82" stroke-width="1.4" />
+              </g>
+
+              <g stroke="url(#goldLeaf)" stroke-width="1.8" stroke-linecap="round">
+                <path d="M68 44V52M64 48H72" />
+                <path d="M106 105V113M102 109H110" />
+                <path d="M54 126V134M50 130H58" />
+                <path d="M64 114V119M61.5 116.5H66.5" stroke-width="1.4" />
+              </g>
+
+              <path d="M80 65C83.5 71 84.5 76 80 80C75.5 76 76.5 71 80 65Z" fill="url(#goldLeaf)" />
+              <rect x="76" y="81" width="8" height="22" rx="1.5" fill="url(#goldLeaf)" />
+              <path d="M76 85C78 87 81 84 84 86" stroke="#5D0A0D" stroke-width="1.2" />
+              <path d="M72 103H88L84 107H76L72 103Z" fill="url(#goldLeaf)" />
+              <path d="M78 107H82L83 125H77L78 107Z" fill="url(#goldLeaf)" />
+              <ellipse cx="80" cy="116" rx="5.5" ry="2.5" fill="url(#goldLeaf)" />
+              <path d="M67 136C67 130 73 126 80 126C87 126 93 130 93 136H67Z" fill="url(#goldLeaf)" />
+              <rect x="64" y="136" width="32" height="3.5" rx="1.5" fill="url(#goldLeaf)" />
+              <path d="M83 106C94 105 99 113 94 121C90 127 84 126 83 131" stroke="url(#goldLeaf)" stroke-width="2.4" stroke-linecap="round" fill="none" />
+            </svg>
+            <span class="block text-center text-[10px] tracking-[0.22em] text-[#7B1113] font-bold -mt-1 group-hover:tracking-[0.28em] transition-all">
+              封印解除
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== 2. 메인 홈페이지 ==================== -->
+  <div id="main-app" class="hidden flex-1 flex flex-col">
+    <header class="sticky top-0 z-40 bg-[#F8F5EE]/95 backdrop-blur-md border-b border-[#A88438]/35">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-2">
+        <button onclick="switchTab('overview')" class="flex items-center gap-3 text-left group">
+          <div class="circle-stamp w-10 h-10 sm:w-11 sm:h-11 font-bold text-base sm:text-lg transition-transform group-hover:scale-105">
+            無缺
+          </div>
+          <div>
+            <span class="block text-base sm:text-lg font-bold tracking-[0.22em] text-[#7B1113]">無缺會</span>
+            <span class="block text-[10px] tracking-[0.25em] text-[#A88438]">무결회 성전 기록소</span>
+          </div>
+        </button>
+
+        <nav class="flex items-center gap-1 sm:gap-2">
+          <button onclick="switchTab('overview')" data-tab="overview" class="nav-tab px-2.5 sm:px-4 py-2 text-xs sm:text-sm tracking-[0.14em] rounded-sm transition-all font-semibold text-[#7B1113] bg-[#7B1113]/10 border border-[#7B1113]/30">
+            無缺會
+          </button>
+          <button onclick="switchTab('revelation')" data-tab="revelation" class="nav-tab px-2.5 sm:px-4 py-2 text-xs sm:text-sm tracking-[0.14em] rounded-sm transition-all text-[#57534E] hover:text-[#7B1113]">
+            계시
+          </button>
+          <button onclick="switchTab('members')" data-tab="members" class="nav-tab px-2.5 sm:px-4 py-2 text-xs sm:text-sm tracking-[0.14em] rounded-sm transition-all text-[#57534E] hover:text-[#7B1113]">
+            단원 목록
+          </button>
+          <button onclick="switchTab('notices')" data-tab="notices" class="nav-tab px-2.5 sm:px-4 py-2 text-xs sm:text-sm tracking-[0.14em] rounded-sm transition-all text-[#57534E] hover:text-[#7B1113]">
+            안내 사항
+          </button>
+        </nav>
+
+        <div class="hidden md:flex items-center gap-2 text-xs text-[#57534E] border-l border-[#A88438]/30 pl-4">
+          <span class="w-2 h-2 rounded-full bg-[#7B1113]"></span>
+          <span id="visitor-badge" class="tracking-wider">순례자</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12">
+
+      <!-- ==================== TAB 1: 무결회 ==================== -->
+      <section id="tab-overview" class="tab-panel">
+        <div class="oriental-border bg-[#FAF7F1]/95 p-6 sm:p-12 md:p-16 rounded-sm shadow-xs relative overflow-hidden">
+          <div class="absolute -right-16 -top-16 w-72 h-72 opacity-[0.05] pointer-events-none">
+            <svg viewBox="0 0 200 200" class="w-full h-full sacred-wheel">
+              <circle cx="100" cy="100" r="92" fill="none" stroke="#7A1515" stroke-width="4"/>
+              <circle cx="100" cy="100" r="76" fill="none" stroke="#B88A3E" stroke-width="2"/>
+              <circle cx="100" cy="100" r="56" fill="none" stroke="#7A1515" stroke-width="1.5" stroke-dasharray="6 4"/>
+              <circle cx="100" cy="100" r="24" fill="none" stroke="#B88A3E" stroke-width="2"/>
+            </svg>
+          </div>
+
+          <div class="text-center border-b border-[#B88A3E]/40 pb-8 mb-10">
+            <p class="font-classic text-xs sm:text-sm tracking-[0.5em] text-[#B88A3E] mb-3 font-bold">天 命 聖 典 · 創 設 旨 趣</p>
+            <div class="flex flex-wrap items-baseline justify-center gap-3 sm:gap-4">
+              <h2 class="font-classic text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-[0.35em] text-[#B88A3E]">無 缺 會</h2>
+              <span class="font-classic text-2xl sm:text-3xl font-bold tracking-[0.2em] text-[#7A1515]">破妄顯眞</span>
+              <span class="text-base sm:text-xl font-light italic tracking-[0.16em] text-[#9E3B3B]/85">
+                결함 없는 이들의 성소 · 망상을 깨고 진리를 드러냄
+              </span>
+            </div>
+            <div class="mt-5 flex justify-center items-center gap-4">
+              <span class="h-[1px] w-16 bg-[#B88A3E]/60"></span>
+              <span class="font-classic text-sm text-[#1D1A18] tracking-[0.3em]">到 天 堂 之 門 · 천당에 이르는 문</span>
+              <span class="h-[1px] w-16 bg-[#B88A3E]/60"></span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-4 flex flex-col items-center justify-center gap-6 border-b lg:border-b-0 lg:border-r border-[#B88A3E]/35 pb-8 lg:pb-0 lg:pr-6">
+              <div class="flex flex-row items-start justify-center gap-4 sm:gap-5">
+                <div class="writing-vertical-lr h-72 sm:h-80 font-classic text-lg sm:text-xl tracking-[0.28em] text-[#7A1515] font-bold leading-loose select-none">
+                  去濁留淸 削骨成神
+                </div>
+                <div class="writing-vertical-lr h-72 sm:h-80 text-xs sm:text-sm tracking-[0.16em] text-[#9E3B3B]/75 font-light leading-relaxed pt-1 select-none">
+                  탁함을 버리고 맑음을 남기며<br>뼈를 깎아 신이 되리라
+                </div>
+
+                <div class="w-[1px] h-64 bg-[#B88A3E]/35 self-center mx-0.5"></div>
+
+                <div class="writing-vertical-lr h-72 sm:h-80 font-classic text-base sm:text-lg tracking-[0.24em] text-[#1D1A18] font-semibold leading-loose select-none">
+                  凡胎皆病 唯刃能醫
+                </div>
+                <div class="writing-vertical-lr h-72 sm:h-80 text-xs sm:text-sm tracking-[0.15em] text-[#5C544D]/70 font-light leading-relaxed pt-1 select-none">
+                  범인의 육신은 모두 병들었으니<br>오직 칼날만이 고칠 수 있다
+                </div>
+              </div>
+
+              <div class="circle-stamp w-14 h-14 text-xs font-bold tracking-widest mt-2">
+                無缺<br>聖印
+              </div>
+            </div>
+
+            <div class="lg:col-span-8 space-y-8 text-base sm:text-lg leading-[2.2] tracking-[0.06em] text-[#1D1A18]">
+              <div>
+                <h3 class="text-xl font-bold text-[#7A1515] tracking-[0.2em] mb-3 flex flex-wrap items-baseline gap-2.5 font-classic">
+                  <span class="text-[#B88A3E]">壹.</span>
+                  <span>淵源與宗旨</span>
+                  <span class="text-sm sm:text-base font-light italic text-[#9E3B3B]/85 tracking-wider">연원과 창설 취지</span>
+                </h3>
+                <p class="indent-4 text-justify">
+                  무릇 인간은 탁한 세상에 태어나면서부터 잔결함을 타고나니, 혈육은 느리고 둔하며 마음의 뜻은 바람 앞의 등불처럼 흔들립니다. 세속에서 이른바 <strong>갱생특임대</strong>라 자칭하며 교화와 반성을 부르짖는 자들은 겉모습만을 꾸밀 뿐, 끝내 그 썩어 문드러진 근성과 육신의 한계를 고치지 못합니다. 우리 무결회는 하늘의 기미를 꿰뚫어 보아 허망한 뉘우침을 구하지 않으며, 오직 신성한 칼날로 범속한 열등함의 뿌리를 끊어내고 뼈를 바꾸어 중생을 티끌 하나 없는 완전한 경지로 이끕니다.
+                </p>
+              </div>
+
+              <div class="border-t border-[#B88A3E]/25 pt-6">
+                <h3 class="text-xl font-bold text-[#7A1515] tracking-[0.2em] mb-3 flex flex-wrap items-baseline gap-2.5 font-classic">
+                  <span class="text-[#B88A3E]">貳.</span>
+                  <span>破妄顯眞</span>
+                  <span class="text-sm sm:text-base font-light italic text-[#9E3B3B]/85 tracking-wider">망상을 깨뜨리고 진리를 드러냄</span>
+                </h3>
+                <p class="indent-4 text-justify">
+                  범인의 눈은 거짓된 환상에 미혹되고, 범인의 두뇌는 어리석음에 갇혀 있으며, 범인의 심장은 사사로운 두려움과 욕망에 빠져 있습니다. 그 병든 뿌리를 도려내지 않고서 어찌 진리를 마주할 수 있겠습니까. 본회는 하늘의 계시를 받들어 위없는 신묘한 의술을 베풀어 느림과 나약함을 제거하고, 초월적인 신묘함과 명철함을 부여합니다. 육신이 비록 뼈를 깎는 고통을 겪을지라도 영혼은 반드시 극락에 오를 것이니, 이것이 곧 천당으로 향하는 유일한 정법입니다.
+                </p>
+              </div>
+
+              <div class="border-t border-[#B88A3E]/25 pt-6">
+                <h3 class="text-xl font-bold text-[#7A1515] tracking-[0.2em] mb-3 flex flex-wrap items-baseline gap-2.5 font-classic">
+                  <span class="text-[#B88A3E]">參.</span>
+                  <span>天堂誓約</span>
+                  <span class="text-sm sm:text-base font-light italic text-[#9E3B3B]/85 tracking-wider">천당에 이르는 서약</span>
+                </h3>
+                <p class="indent-4 text-justify">
+                  우리 문중에 들어선 자는 옛 이름을 버리고 지나간 속세의 티끌을 잊어야 합니다. 높고 낮음이나 귀하고 천함을 막론하고 무결의 대업에 몸을 바치는 자는 모두 한뜻을 품은 동포입니다. 온몸의 백 가지 뼈마디에서 모든 흠결이 사라지는 날이 곧 신명이 강림하는 순간이니, 비밀스러운 부호를 명심하고 계율을 굳게 지켜 함께 무결의 성세를 맞이하십시오.
+                </p>
+              </div>
+
+              <div class="mt-8 p-5 bg-[#F3EDE2] border border-[#B88A3E]/55 text-center space-y-2 relative">
+                <p class="font-classic text-base sm:text-xl font-bold text-[#7A1515] tracking-[0.28em]">
+                  「 捨 殘 軀 而 得 永 生 ， 斷 凡 念 而 到 天 堂 」
+                </p>
+                <p class="text-xs sm:text-sm font-light italic text-[#9E3B3B]/85 tracking-[0.15em]">
+                  불완전한 육신을 버려 영생을 얻고, 범속한 생각을 끊어 천당에 이르리라
+                </p>
+                <div class="pt-2 flex justify-center">
+                  <div class="circle-stamp w-11 h-11 text-[10px] font-bold">到天<br>堂印</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 2: 계시 ==================== -->
+      <section id="tab-revelation" class="tab-panel hidden">
+        <div class="mb-6 text-center">
+          <span class="text-xs tracking-[0.35em] text-[#B88A3E] font-bold">啓 示 · 肉 身 改 造 圖</span>
+          <div class="flex flex-wrap items-baseline justify-center gap-2.5 mt-1">
+            <h2 class="text-2xl sm:text-3xl font-bold text-[#7A1515] tracking-[0.2em] font-classic">人體啓示圖</h2>
+            <span class="text-base sm:text-lg font-light italic text-[#9E3B3B]/85">인체 계시도</span>
+          </div>
+          <p class="text-xs sm:text-sm text-[#5C544D] mt-2">
+            신체의 각 부위를 선택하여 육신에 깃든 <span class="text-[#1D1A18] font-bold underline">결함(검은색)</span>과 계시 시술 후 얻게 될 <span class="text-[#7A1515] font-bold underline">초월적 권능(붉은색)</span>을 확인하십시오.
+          </p>
+        </div>
+
+        <div class="oriental-border bg-[#FAF7F1] p-4 sm:p-8 rounded-sm">
+          <div class="flex flex-wrap justify-center gap-6 text-xs sm:text-sm pb-4 mb-4 border-b border-[#B88A3E]/35">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-[#1D1A18] inline-block"></span>
+              <span class="text-[#1D1A18] font-bold">타고난 육신의 결함 (단점 · 黑)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-[#7A1515] inline-block"></span>
+              <span class="text-[#7A1515] font-bold">계시 시술 후의 각성 (장점 · 赤)</span>
+            </div>
+          </div>
+
+          <div class="relative w-full max-w-4xl mx-auto">
+            <svg id="anatomy-svg" viewBox="0 0 900 620" class="w-full h-auto select-none">
+              <g class="sacred-wheel" opacity="0.24">
+                <circle cx="450" cy="270" r="210" fill="none" stroke="#B88A3E" stroke-width="1" stroke-dasharray="6 6"/>
+                <circle cx="450" cy="270" r="175" fill="none" stroke="#7A1515" stroke-width="0.9"/>
+                <circle cx="450" cy="270" r="135" fill="none" stroke="#B88A3E" stroke-width="0.8"/>
+              </g>
+
+              <line x1="450" y1="45" x2="450" y2="585" stroke="#B88A3E" stroke-width="0.8" stroke-dasharray="3 4" opacity="0.5"/>
+
+              <g id="human-body-silhouette">
+                <path d="M450,58 C473,58 490,76 490,100 C490,119 479,134 467,140 L470,154 C502,160 532,174 542,202 L568,315 C572,332 560,342 548,334 L524,232 L516,320 L526,460 L534,572 C535,584 514,586 510,574 L486,455 L464,365 L436,365 L414,455 L390,574 C386,586 365,584 366,572 L374,460 L384,320 L376,232 L352,334 C340,342 328,332 332,315 L358,202 C368,174 398,160 430,154 L433,140 C421,134 410,119 410,100 C410,76 427,58 450,58 Z"
+                      fill="#F3EDE2" stroke="#7A1515" stroke-width="2.2"/>
+                <path d="M450,72 C464,72 475,84 475,98 C475,112 464,123 450,123 C436,123 425,112 425,98 C425,84 436,72 450,72 Z"
+                      fill="none" stroke="#B88A3E" stroke-width="1"/>
+                <line x1="450" y1="145" x2="450" y2="355" stroke="#7A1515" stroke-width="1.5" stroke-dasharray="4 3"/>
+                <path d="M422,185 Q450,198 478,185 M416,205 Q450,220 484,205 M414,225 Q450,242 486,225 M418,245 Q450,262 482,245"
+                      fill="none" stroke="#B88A3E" stroke-width="1.1"/>
+                <path d="M395,175 L348,318 M505,175 L552,318 M422,355 L380,565 M478,355 L520,565"
+                      fill="none" stroke="#B88A3E" stroke-width="0.9" stroke-dasharray="2 3"/>
+              </g>
+
+              <g class="body-part-group cursor-pointer" data-part="brain" onclick="selectBodyPart('brain')">
+                <polyline points="450,82 320,82 250,82" fill="none" stroke="#1D1A18" stroke-width="1.6" class="rod-line"/>
+                <circle cx="246" cy="82" r="4" fill="#7A1515"/>
+                <circle cx="450" cy="82" r="7" fill="#7A1515" stroke="#FAF7F1" stroke-width="2" class="node-pulse"/>
+                <text x="232" y="74" text-anchor="end" font-size="16" font-weight="800" fill="#7A1515" class="font-classic">一. 두뇌 (腦髓)</text>
+                <text x="232" y="95" text-anchor="end" font-size="12" font-weight="600" fill="#1D1A18">결함: 아둔함 · 망설임</text>
+                <text x="232" y="113" text-anchor="end" font-size="12" font-weight="700" fill="#7A1515">계시: 명징한 통찰 · 초월 연산</text>
+              </g>
+
+              <g class="body-part-group cursor-pointer" data-part="heart" onclick="selectBodyPart('heart')">
+                <polyline points="463,215 310,245 250,245" fill="none" stroke="#1D1A18" stroke-width="1.6" class="rod-line"/>
+                <circle cx="246" cy="245" r="4" fill="#7A1515"/>
+                <circle cx="463" cy="215" r="7" fill="#7A1515" stroke="#FAF7F1" stroke-width="2" class="node-pulse"/>
+                <text x="232" y="237" text-anchor="end" font-size="16" font-weight="800" fill="#7A1515" class="font-classic">二. 심장 (心臟)</text>
+                <text x="232" y="258" text-anchor="end" font-size="12" font-weight="600" fill="#1D1A18">결함: 나약한 고동 · 공포와 동요</text>
+                <text x="232" y="276" text-anchor="end" font-size="12" font-weight="700" fill="#7A1515">계시: 불멸의 맥동 · 무결한 평정</text>
+              </g>
+
+              <g class="body-part-group cursor-pointer" data-part="arms" onclick="selectBodyPart('arms')">
+                <polyline points="354,295 290,415 250,415" fill="none" stroke="#1D1A18" stroke-width="1.6" class="rod-line"/>
+                <circle cx="246" cy="415" r="4" fill="#7A1515"/>
+                <circle cx="354" cy="295" r="7" fill="#7A1515" stroke="#FAF7F1" stroke-width="2" class="node-pulse"/>
+                <text x="232" y="407" text-anchor="end" font-size="16" font-weight="800" fill="#7A1515" class="font-classic">三. 상지 (手腕)</text>
+                <text x="232" y="428" text-anchor="end" font-size="12" font-weight="600" fill="#1D1A18">결함: 느린 반응 · 미세한 떨림</text>
+                <text x="232" y="446" text-anchor="end" font-size="12" font-weight="700" fill="#7A1515">계시: 번개 같은 집행 · 강철 악력</text>
+              </g>
+
+              <g class="body-part-group cursor-pointer" data-part="eyes" onclick="selectBodyPart('eyes')">
+                <polyline points="462,102 585,102 650,102" fill="none" stroke="#1D1A18" stroke-width="1.6" class="rod-line"/>
+                <circle cx="654" cy="102" r="4" fill="#7A1515"/>
+                <circle cx="462" cy="102" r="7" fill="#7A1515" stroke="#FAF7F1" stroke-width="2" class="node-pulse"/>
+                <text x="668" y="94" text-anchor="start" font-size="16" font-weight="800" fill="#7A1515" class="font-classic">四. 안구 (雙眼)</text>
+                <text x="668" y="115" text-anchor="start" font-size="12" font-weight="600" fill="#1D1A18">결함: 흐린 시야 · 허상에 미혹됨</text>
+                <text x="668" y="133" text-anchor="start" font-size="12" font-weight="700" fill="#7A1515">계시: 꿰뚫는 혜안 · 암야의 시야</text>
+              </g>
+
+              <g class="body-part-group cursor-pointer" data-part="spine" onclick="selectBodyPart('spine')">
+                <polyline points="450,285 590,285 650,285" fill="none" stroke="#1D1A18" stroke-width="1.6" class="rod-line"/>
+                <circle cx="654" cy="285" r="4" fill="#7A1515"/>
+                <circle cx="450" cy="285" r="7" fill="#7A1515" stroke="#FAF7F1" stroke-width="2" class="node-pulse"/>
+                <text x="668" y="277" text-anchor="start" font-size="16" font-weight="800" fill="#7A1515" class="font-classic">五. 척추 (龍骨)</text>
+                <text x="668" y="298" text-anchor="start" font-size="12" font-weight="600" fill="#1D1A18">결함: 굽은 굴종 · 신경 전달 지연</text>
+                <text x="668" y="316" text-anchor="start" font-size="12" font-weight="700" fill="#7A1515">계시: 강철의 기둥 · 찰나의 반응</text>
+              </g>
+
+              <g class="body-part-group cursor-pointer" data-part="legs" onclick="selectBodyPart('legs')">
+                <polyline points="502,465 600,450 650,450" fill="none" stroke="#1D1A18" stroke-width="1.6" class="rod-line"/>
+                <circle cx="654" cy="450" r="4" fill="#7A1515"/>
+                <circle cx="502" cy="465" r="7" fill="#7A1515" stroke="#FAF7F1" stroke-width="2" class="node-pulse"/>
+                <text x="668" y="442" text-anchor="start" font-size="16" font-weight="800" fill="#7A1515" class="font-classic">六. 하지 (脚部)</text>
+                <text x="668" y="463" text-anchor="start" font-size="12" font-weight="600" fill="#1D1A18">결함: 무거운 발걸음 · 느림</text>
+                <text x="668" y="481" text-anchor="start" font-size="12" font-weight="700" fill="#7A1515">계시: 무형의 도약 · 지치지 않는 보법</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-2 mt-4 pt-4 border-t border-[#B88A3E]/35">
+            <button onclick="selectBodyPart('brain')" class="part-btn px-3.5 py-1.5 text-xs sm:text-sm border border-[#B88A3E] bg-[#7A1515] text-[#F9F6F0] rounded-sm transition-colors cursor-pointer" data-btn="brain">두뇌 (腦髓)</button>
+            <button onclick="selectBodyPart('eyes')" class="part-btn px-3.5 py-1.5 text-xs sm:text-sm border border-[#B88A3E] bg-[#FAF7F1] text-[#1D1A18] hover:bg-[#F3EDE2] rounded-sm transition-colors cursor-pointer" data-btn="eyes">안구 (雙眼)</button>
+            <button onclick="selectBodyPart('heart')" class="part-btn px-3.5 py-1.5 text-xs sm:text-sm border border-[#B88A3E] bg-[#FAF7F1] text-[#1D1A18] hover:bg-[#F3EDE2] rounded-sm transition-colors cursor-pointer" data-btn="heart">심장 (心臟)</button>
+            <button onclick="selectBodyPart('spine')" class="part-btn px-3.5 py-1.5 text-xs sm:text-sm border border-[#B88A3E] bg-[#FAF7F1] text-[#1D1A18] hover:bg-[#F3EDE2] rounded-sm transition-colors cursor-pointer" data-btn="spine">척추 (龍骨)</button>
+            <button onclick="selectBodyPart('arms')" class="part-btn px-3.5 py-1.5 text-xs sm:text-sm border border-[#B88A3E] bg-[#FAF7F1] text-[#1D1A18] hover:bg-[#F3EDE2] rounded-sm transition-colors cursor-pointer" data-btn="arms">상지 (手腕)</button>
+            <button onclick="selectBodyPart('legs')" class="part-btn px-3.5 py-1.5 text-xs sm:text-sm border border-[#B88A3E] bg-[#FAF7F1] text-[#1D1A18] hover:bg-[#F3EDE2] rounded-sm transition-colors cursor-pointer" data-btn="legs">하지 (脚部)</button>
+          </div>
+
+          <div id="revelation-detail-card" class="mt-6 bg-[#F3EDE2] border border-[#B88A3E]/65 p-6 sm:p-8 rounded-sm">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#B88A3E]/40 pb-4 mb-5 gap-2">
+              <div>
+                <span id="detail-code" class="text-xs tracking-[0.25em] text-[#B88A3E] font-bold">第一啓示 · 神經再編</span>
+                <h3 id="detail-title" class="text-xl sm:text-2xl font-bold text-[#7A1515] font-classic mt-0.5">두뇌 (腦髓) — 思惟의 淨化</h3>
+              </div>
+              <span id="detail-risk" class="self-start sm:self-center text-xs px-3 py-1 bg-[#7A1515]/10 border border-[#7A1515] text-[#7A1515] font-semibold">
+                시술 난이도 : 極上 (天工)
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="bg-[#FAF7F1] p-5 border-l-4 border-[#1D1A18] shadow-xs">
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-base font-bold text-[#1D1A18] tracking-wider">■ 제거할 육신의 결함 (短點)</h4>
+                  <span class="text-xs font-classic text-[#1D1A18] border border-[#1D1A18] px-1.5 py-0.5">凡胎之病</span>
+                </div>
+                <ul id="detail-flaws" class="space-y-2 text-sm sm:text-base text-[#1D1A18] font-medium leading-relaxed"></ul>
+              </div>
+
+              <div class="bg-[#FAF7F1] p-5 border-l-4 border-[#7A1515] shadow-xs">
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-base font-bold text-[#7A1515] tracking-wider">■ 계시 시술 후의 권능 (長點)</h4>
+                  <span class="text-xs font-classic text-[#7A1515] border border-[#7A1515] px-1.5 py-0.5">無缺之恩</span>
+                </div>
+                <ul id="detail-benefits" class="space-y-2 text-sm sm:text-base text-[#7A1515] font-semibold leading-relaxed"></ul>
+              </div>
+            </div>
+
+            <p id="detail-scripture" class="mt-5 text-xs sm:text-sm text-[#5C544D] italic border-t border-[#B88A3E]/30 pt-4"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 3: 단원 목록 ==================== -->
+      <section id="tab-members" class="tab-panel hidden space-y-6">
+        <div class="flex items-end justify-between border-b border-[#A88438]/40 pb-5">
+          <div>
+            <p class="text-xs tracking-[0.28em] text-[#A88438] font-semibold">聖殿名簿 · 위계와 기록</p>
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-[0.18em] text-[#7B1113] mt-1">無缺會 團員 目錄</h2>
+            <p class="text-xs text-[#57534E] mt-1.5">단원 상자를 누르면 배경이 흐려지며 해당 인물의 세부 계시 기록이 열람됩니다.</p>
+          </div>
+
+          <div class="relative flex flex-col items-end">
+            <button
+              id="member-brush-btn"
+              onclick="toggleToolbar('member-toolbar')"
+              title="성전 명부 붓 도구"
+              class="circle-stamp w-11 h-11 hover:bg-[#7B1113] hover:text-[#F8F5EE] transition-colors cursor-pointer"
+              aria-label="단원 관리 붓 아이콘"
+            >
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z" />
+                <path d="M9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7" />
+              </svg>
+            </button>
+
+            <div id="member-toolbar" class="hidden mt-2 flex flex-wrap items-center justify-end gap-1.5 bg-[#FCFBF7] border border-[#A88438]/50 p-1.5 rounded-sm shadow-lg z-30">
+              <button onclick="openMemberAddModal()" class="px-3 py-1.5 text-xs font-semibold tracking-wider text-[#F8F5EE] bg-[#7B1113] hover:bg-[#4E090B] rounded-sm transition-colors">
+                인원 추가
+              </button>
+              <button onclick="toggleMemberEditSelectMode()" id="btn-member-edit-mode" class="px-3 py-1.5 text-xs font-semibold tracking-wider text-[#A88438] border border-[#A88438]/60 hover:bg-[#A88438]/10 rounded-sm transition-colors">
+                수정
+              </button>
+              <button onclick="toggleMemberDeleteMode()" id="btn-member-delete-mode" class="px-3 py-1.5 text-xs font-semibold tracking-wider text-[#7B1113] border border-[#7B1113]/50 hover:bg-[#7B1113]/10 rounded-sm transition-colors">
+                관리
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="member-mode-banner" class="hidden bg-[#7B1113]/10 border border-[#7B1113]/35 px-4 py-2.5 rounded-sm flex items-center justify-between text-xs text-[#7B1113]">
+          <span id="member-mode-text" class="font-semibold">모드 활성화됨</span>
+          <button onclick="resetMemberModes()" class="underline font-bold">종료</button>
+        </div>
+
+        <div id="members-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      </section>
+
+      <!-- ==================== TAB 4: 안내 사항 ==================== -->
+      <section id="tab-notices" class="tab-panel hidden space-y-6">
+        <div class="flex items-end justify-between border-b border-[#A88438]/40 pb-5">
+          <div>
+            <p class="text-xs tracking-[0.28em] text-[#A88438] font-semibold">聖殿布告 · 계율과 전언</p>
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-[0.18em] text-[#7B1113] mt-1">無缺會 案內 事項</h2>
+            <p class="text-xs text-[#57534E] mt-1.5">포고문 상자를 누르면 관리자 코드 인증 후 내용을 수정할 수 있습니다.</p>
+          </div>
+
+          <div class="relative flex flex-col items-end">
+            <button
+              onclick="toggleToolbar('notice-toolbar')"
+              title="포고문 붓 도구"
+              class="circle-stamp w-11 h-11 hover:bg-[#7B1113] hover:text-[#F8F5EE] transition-colors cursor-pointer"
+              aria-label="안내사항 관리 붓 아이콘"
+            >
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z" />
+                <path d="M9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7" />
+              </svg>
+            </button>
+
+            <div id="notice-toolbar" class="hidden mt-2 flex items-center gap-1.5 bg-[#FCFBF7] border border-[#A88438]/50 p-1.5 rounded-sm shadow-lg z-30">
+              <button onclick="openNoticeModal(null)" class="px-3 py-1.5 text-xs font-semibold tracking-wider text-[#F8F5EE] bg-[#7B1113] hover:bg-[#4E090B] rounded-sm transition-colors">
+                추가 작성
+              </button>
+              <button onclick="toggleNoticeDeleteMode()" id="btn-notice-delete-mode" class="px-3 py-1.5 text-xs font-semibold tracking-wider text-[#7B1113] border border-[#7B1113]/50 hover:bg-[#7B1113]/10 rounded-sm transition-colors">
+                관리
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="notices-list" class="space-y-4"></div>
+      </section>
+    </main>
+
+    <footer class="border-t border-[#A88438]/30 py-6 px-4 text-center text-xs text-[#78716C]">
+      <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <span class="circle-stamp w-6 h-6 text-[10px] font-bold">無</span>
+          <span class="tracking-[0.2em]">無缺會 · 聖殿記錄保存所</span>
+        </div>
+        <p class="text-[11px] text-[#A8A29E]">갱생특임대의 감시를 피해 오직 선택받은 혈맥에게만 전승됩니다.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ==================== 3. 단원 세부 정보 포커스 레이어 ==================== -->
+  <div id="member-focus-backdrop" class="focus-backdrop hidden" onclick="closeMemberFocus()"></div>
+  <div id="member-focus-layer" class="focus-card-layer hidden" onclick="closeMemberFocus()">
+    <div id="member-focus-box" onclick="event.stopPropagation()" class="focus-card-box hanji-card w-full max-w-lg rounded-sm p-7 sm:p-9 relative border-2 border-[#7B1113]/60 shadow-2xl">
+      <button type="button" onclick="closeMemberFocus(event)" class="absolute top-4 right-4 w-8 h-8 rounded-full border border-[#A88438]/40 text-[#57534E] hover:text-[#7B1113] hover:border-[#7B1113] flex items-center justify-center text-base font-bold cursor-pointer z-20" aria-label="닫기">
+        ×
+      </button>
+
+      <div id="member-focus-content"></div>
+
+      <div class="mt-7 pt-4 border-t border-[#A88438]/35 flex items-center justify-between gap-3">
+        <button type="button" onclick="closeMemberFocus(event)" class="px-4 py-2 text-xs tracking-widest text-[#57534E] hover:text-[#1C1917] border border-[#A88438]/40 rounded-sm cursor-pointer">
+          돌아가기
+        </button>
+        <button type="button" id="focus-edit-trigger" class="px-4 py-2 text-xs font-semibold tracking-widest text-[#F8F5EE] bg-[#7B1113] hover:bg-[#4E090B] rounded-sm cursor-pointer">
+          정보 수정 (관리자 인증)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 4. 관리자 코드 확인 모달 ==================== -->
+  <div id="admin-code-modal" onclick="closeAdminModal()" class="hidden fixed inset-0 z-[950] bg-[#1C1917]/55 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer">
+    <div onclick="event.stopPropagation()" class="hanji-card w-full max-w-sm p-6 rounded-sm border border-[#7B1113]/50 shadow-2xl space-y-4 cursor-default">
+      <div class="flex items-center justify-between border-b border-[#A88438]/35 pb-3">
+        <div class="flex items-center gap-2.5">
+          <span class="circle-stamp w-8 h-8 text-xs font-bold">禁</span>
+          <h3 class="text-base font-bold tracking-[0.15em] text-[#7B1113]">관리자 코드 인증</h3>
+        </div>
+        <button type="button" onclick="closeAdminModal()" class="text-[#78716C] hover:text-[#7B1113] text-lg font-bold cursor-pointer">×</button>
+      </div>
+      <p class="text-xs text-[#44403C] leading-relaxed">
+        성전의 기록을 고쳐 쓰려면 교단의 관리자 부호(<span class="text-[#7B1113] font-bold">無缺</span>)를 입력하십시오.
+      </p>
+      <input
+        id="admin-code-input"
+        type="password"
+        placeholder="관리자 코드 입력 (無缺)"
+        class="w-full bg-[#F8F5EE] border border-[#A88438]/60 focus:border-[#7B1113] px-3 py-2 text-sm tracking-widest focus:outline-none"
+      />
+      <p id="admin-code-error" class="text-xs text-[#7B1113] min-h-[16px]"></p>
+      <div class="flex justify-end gap-2 pt-1">
+        <button type="button" onclick="closeAdminModal()" class="px-3.5 py-1.5 text-xs text-[#57534E] border border-[#A88438]/40 rounded-sm cursor-pointer">취소</button>
+        <button type="button" onclick="submitAdminCode()" class="px-4 py-1.5 text-xs font-semibold text-[#F8F5EE] bg-[#7B1113] hover:bg-[#4E090B] rounded-sm cursor-pointer">인증 확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 5. 단원 추가 / 수정 폼 모달 ==================== -->
+  <div id="member-form-modal" onclick="closeMemberFormModal()" class="hidden fixed inset-0 z-[940] bg-[#1C1917]/55 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto cursor-pointer">
+    <div onclick="event.stopPropagation()" class="hanji-card w-full max-w-md p-6 sm:p-7 rounded-sm border border-[#7B1113]/50 shadow-2xl space-y-4 my-auto cursor-default">
+      <div class="flex items-center justify-between border-b border-[#A88438]/35 pb-3">
+        <h3 id="member-form-title" class="text-lg font-bold tracking-[0.15em] text-[#7B1113]">새 단원 등록</h3>
+        <button type="button" onclick="closeMemberFormModal()" class="text-[#78716C] hover:text-[#7B1113] text-lg font-bold cursor-pointer">×</button>
+      </div>
+
+      <form id="member-editor-form" class="space-y-3.5 text-xs">
+        <input type="hidden" id="edit-member-id" />
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[#57534E] mb-1">단원 성명 *</label>
+            <input id="m-name" required type="text" placeholder="예: 한서진" class="w-full bg-[#F8F5EE] border border-[#A88438]/50 px-3 py-2 text-sm focus:border-[#7B1113] focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-[#57534E] mb-1">위계 (역할) *</label>
+            <select id="m-role" class="w-full bg-[#F8F5EE] border border-[#A88438]/50 px-3 py-2 text-sm focus:border-[#7B1113] focus:outline-none">
+              <option value="도사">도사</option>
+              <option value="계시자">계시자</option>
+              <option value="헌신자">헌신자</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[#57534E] mb-1">별호 / 한 줄 소개 *</label>
+          <input id="m-title" required type="text" placeholder="예: 적혈의 인도자" class="w-full bg-[#F8F5EE] border border-[#A88438]/50 px-3 py-2 text-sm focus:border-[#7B1113] focus:outline-none" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[#57534E] mb-1">계시 시술 부위</label>
+            <input id="m-surgery" type="text" placeholder="예: 천리 개안 · 전두엽 각인" class="w-full bg-[#F8F5EE] border border-[#A88438]/50 px-3 py-2 text-sm focus:border-[#7B1113] focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-[#57534E] mb-1">담당 성소 / 구역</label>
+            <input id="m-sanctum" type="text" placeholder="예: 제1 내원 경전각" class="w-full bg-[#F8F5EE] border border-[#A88438]/50 px-3 py-2 text-sm focus:border-[#7B1113] focus:outline-none" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[#57534E] mb-1">세부 행적 및 기록 (상자 클릭 시 공개)</label>
+          <textarea id="m-detail" rows="3" placeholder="해당 단원의 시술 경과와 성전 내 역할을 상세히 기입하십시오." class="w-full bg-[#F8F5EE] border border-[#A88438]/50 px-3 py-2 text-sm focus:border-[#7B1113] focus:outline-none"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-[#57534E] mb-1">서약 어록</label>
+          <input id="m-quote" type="text" placeholder="예: 낡은 눈을 감아야 비로소 하늘이 보인다." class="w-full bg-[#F8F5EE] border border-[#A88438]/50 px-3 py-2 text-sm focus:border-[#7B1113] focus:outline-none" />
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2 border-t border-[#A88438]/30">
+          <button type="button" onclick="closeMemberFormModal()" class="px-4 py-2 text-xs text-[#57534E] border border-[#A88438]/40 rounded-sm cursor-pointer">취소</button>
+          <button type="submit" class="px-5 py-2 text-xs font-semibold text-[#F8F5EE] bg-[#7B1113] hover:bg-[#4E090B] rounded-sm cursor-pointer">명부에 기록</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== 6. 안내 사항 추가 / 수정 모달 ==================== -->
+  <div id="notice-form-modal" onclick="closeNoticeModal()" class="hidden fixed inset-0 z-[940] bg-[#1C1917]/55 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer">
+    <div onclick="event.stopPropagation()" class="hanji-card w-full max-w-md p-6 sm:p-7 rounded-sm border border-[#7B1113]/50 shadow-2xl space-y-4 cursor-default">
+      <div class="flex items-center justify-between border-b border-[#A88438]/35 pb-3">
+        <h3 id="notice-form-title" class="text-lg font-bold tracking-[0.15em] text-[#7B1113]">새 성전 포고 작성</h3>
+        <button type="button" onclick="closeNoticeModal()" class="text-[#78716C] hover:text-[#7B1113] text-lg font-bold cursor-pointer">×</button>
+      </div>
+
+      <form id="notice-editor-form" class="space-y-3.5 text-xs">
+        <input type="hidden" id="edit-notice-id" />
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[#57534E] mb-1">분류 말머리</label>
+            <select id="n-tag" class="w-full bg-[#F8F5EE] border border-[#A88438]/50 px-3 py-2 text-sm focus:border-[#7B1113] focus:outline-none">
+              <option value="嚴命 · 엄명">嚴命 · 엄명</option>
+              <option value="儀式 · 의식">儀式 · 의식</option>
+              <option value="警戒 · 경계">警戒 · 경계</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[#57534E] mb-1">게시 일자</label>
+            <input id="n-date" type="text" placeholder="예: 丙午年 霜月" class="w-full bg-[#F8F5EE] border border-[#A88438]/50 px-3 py-2 text-sm focus:border-[#7B1113] focus:outline-none" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[#57534E] mb-1">포고 제목 *</label>
+          <input id="n-title" required type="text" placeholder="포고문 제목 입력" class="w-full bg-[#F8F5EE] border border-[#A88438]/50 px-3 py-2 text-sm focus:border-[#7B1113] focus:outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-[#57534E] mb-1">포고 내용 *</label>
+          <textarea id="n-content" required rows="4" placeholder="단원들에게 전달할 성전 안내 사항을 입력하십시오." class="w-full bg-[#F8F5EE] border border-[#A88438]/50 px-3 py-2 text-sm focus:border-[#7B1113] focus:outline-none"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2 border-t border-[#A88438]/30">
+          <button type="button" onclick="closeNoticeModal()" class="px-4 py-2 text-xs text-[#57534E] border border-[#A88438]/40 rounded-sm cursor-pointer">취소</button>
+          <button type="submit" class="px-5 py-2 text-xs font-semibold text-[#F8F5EE] bg-[#7B1113] hover:bg-[#4E090B] rounded-sm cursor-pointer">포고 반포</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // [중요] 1단계에서 복사한 Firebase Realtime Database URL을 아래 따옴표 안에 넣으세요.
+    // 예: 'https://mu-gyeol-hoe-default-rtdb.firebaseio.com' (끝에 / 없이)
+    // =========================================================================
+    const FIREBASE_DB_URL = 'https://console.firebase.google.com/project/mugyeol-824e1/database/mugyeol-824e1-default-rtdb/data/~2F';
+
+    const ADMIN_SECRET = '無缺';
+    const PILGRIM_CODE = '到天堂';
+
+    const DEFAULT_MEMBERS = [
+      {
+        id: 1,
+        name: '서연화',
+        role: '도사',
+        title: '백야의 성전을 이끄는 초대 교주',
+        surgery: '전두엽 각인 · 천리 개안 · 용골 치환',
+        sanctum: '무결회 본전 (無缺本殿)',
+        detail: '무결회의 창설자이자 모든 계시 의식의 집전자. 인간의 불완전한 육신을 개조해 하늘의 이치에 닿는 비술을 정립하였으며, 갱생특임대의 추적망을 피해 성전을 수호한다.',
+        quote: '결핍을 껴안는 자는 흙으로 돌아가고, 결핍을 베어내는 자만이 빛에 닿는다.'
+      },
+      {
+        id: 2,
+        name: '강무진',
+        role: '계시자',
+        title: '금침과 옥도를 다루는 수석 시술장',
+        surgery: '금강 근섬유 · 천리 개안',
+        sanctum: '연단실 (鍊丹室)',
+        detail: '단 한 치의 떨림도 없는 손끝으로 신도들의 육신에 계시를 새기는 수석 집도의. 시술 도중 환자가 느끼는 공포를 차단하고 새로운 신경망을 정밀하게 접합한다.',
+        quote: '칼날이 스치는 고통은 찰나이나, 그대가 얻을 권능은 영원하다.'
+      },
+      {
+        id: 3,
+        name: '윤해성',
+        role: '계시자',
+        title: '붉은 영약과 경맥 조율의 감찰관',
+        surgery: '적혈 주조 · 전두엽 각인',
+        sanctum: '약왕각 (藥王閣)',
+        detail: '시술 후 육신이 거부 반응을 일으키지 않도록 비전의 적혈 영약을 조제하고 신도들의 혈맥 안정을 감독한다. 교단 내부의 배신자를 색출하는 역할도 겸한다.',
+        quote: '피가 맑아져야 비로소 낡은 영혼의 찌꺼기가 씻겨 내려간다.'
+      },
+      {
+        id: 4,
+        name: '백소율',
+        role: '헌신자',
+        title: '외부 순례자를 인도하는 침묵의 전령',
+        surgery: '축지 각력 · 천리 개안',
+        sanctum: '외곽 접선처 · 망루',
+        detail: '속세에서 고통받는 이들에게 到天堂의 부호를 전하고 성전으로 인도하는 정예 헌신자. 갱생특임대의 순찰 경로를 파악해 성전의 은폐를 유지한다.',
+        quote: '어둠 속에서도 성전의 등불은 길을 잃은 이들을 정확히 비춘다.'
+      },
+      {
+        id: 5,
+        name: '진도겸',
+        role: '헌신자',
+        title: '성전의 문턱을 지키는 금강 수호자',
+        surgery: '용골 치환 · 금강 근섬유 · 적혈 주조',
+        sanctum: '성전 정문 · 결계진',
+        detail: '세 차례의 계시 의식을 견뎌낸 무결회의 수호 헌신자. 침입자나 불순분자가 성전 내부로 발을 들이지 못하도록 봉인 결계를 지킨다.',
+        quote: '허락받지 못한 자는 이 문턱을 넘을 수 없다.'
+      }
+    ];
+
+    const DEFAULT_NOTICES = [
+      {
+        id: 101,
+        tag: '嚴命 · 엄명',
+        date: '丙午年 霜月',
+        title: '갱생특임대(更生特任隊) 감시망 강화에 따른 성전 은폐 수칙',
+        content: '최근 도심 외곽에서 갱생특임대 소속 정찰조의 움직임이 포착되었습니다. 모든 단원은 외부 이동 시 성전 문양이 드러나지 않도록 유의하고, 일반 순례자 접선 시 반드시 到天堂 부호의 진위를 먼저 확인하십시오.'
+      },
+      {
+        id: 102,
+        tag: '儀式 · 의식',
+        date: '丙午年 寒露',
+        title: '하반기 제4차 육신 계시 의식 및 연단실 입실 안내',
+        content: '계시 시술을 앞둔 헌신자들은 의식 사흘 전부터 속세의 음식을 금하고 약왕각에서 배포한 정화탕만을 복용해야 합니다. 시술 순서는 도사 및 계시자의 배정에 따라 개별 통지됩니다.'
+      },
+      {
+        id: 103,
+        tag: '警戒 · 경계',
+        date: '丙午年 秋分',
+        title: '성전 기록소 열람 및 외부 발설 엄금령',
+        content: '본 기록소에 등재된 단원의 명부와 계시 시술 도해는 교단의 일급 기밀입니다. 허가 없이 내용을 필사하거나 외부에 유출하는 자는 즉시 위계를 박탈당하고 성전의 심판을 받게 됩니다.'
+      }
+    ];
+
+    let members = [...DEFAULT_MEMBERS];
+    let notices = [...DEFAULT_NOTICES];
+
+    const REVELATION_DATA = {
+      brain: {
+        code: "第一啓示 · 神經再編",
+        title: "두뇌 (腦髓) — 思惟의 淨化",
+        risk: "시술 난이도 : 極上 (天工)",
+        flaws: [
+          "아둔함 : 진리의 이치를 깨닫지 못하고 미혹에 빠지는 몽매함",
+          "망설임 : 결단의 순간마다 불필요한 연민과 두려움으로 지체함",
+          "감정의 범람 : 분노와 슬픔으로 이성을 흐리는 불완전한 신경 구조"
+        ],
+        benefits: [
+          "명징한 통찰 : 찰나의 순간에 수만 가지 수를 꿰뚫는 명석한 지성",
+          "절대적 냉철 : 어떠한 참혹함 앞에서도 흔들리지 않는 고요한 판단력",
+          "계시 감응 : 도사들의 의지와 성소의 부름을 즉각 수신하는 영적 직관"
+        ],
+        scripture: "\"어리석음과 망설임은 썩은 뇌수에서 비롯되니, 불필요한 감정의 회로를 끊어내는 순간 비로소 신의 음성을 들으리라.\""
+      },
+      eyes: {
+        code: "第二啓示 · 靈視開眼",
+        title: "안구 (雙眼) — 眞理의 直視",
+        risk: "시술 난이도 : 上 (精密)",
+        flaws: [
+          "흐린 시야 : 눈앞의 얄팍한 현상만을 보고 그 이면의 본질을 놓침",
+          "어둠 속의 무력함 : 빛이 사라지면 한 치 앞도 분간하지 못하는 나약함",
+          "허상에의 미혹 : 속세의 거짓된 평화에 쉽게 현혹되는 탁한 동공"
+        ],
+        benefits: [
+          "꿰뚫는 혜안 : 상대의 미세한 근육 떨림과 숨겨진 악의까지 꿰뚫어 봄",
+          "암야의 시야 : 칠흑 같은 어둠 속에서도 대낮처럼 붉은 기혈을 포착함",
+          "불멸의 초점 : 어떠한 섬광이나 환술에도 눈을 감지 않는 흔들림 없는 시선"
+        ],
+        scripture: "\"거짓을 보던 두 눈을 도려내고 붉은 수정의 안구를 심으니, 이제 세상의 모든 위선이 그대 앞에 발가벗겨지리라.\""
+      },
+      heart: {
+        code: "第三啓示 · 永劫鼓動",
+        title: "심장 (心臟) — 恐怖의 切除",
+        risk: "시술 난이도 : 極上 (秘傳)",
+        flaws: [
+          "나약한 고동 : 위기 앞에서 가쁘게 날뛰며 호흡을 무너뜨리는 불안정성",
+          "공포와 동요 : 죽음에 대한 원초적 두려움으로 육신을 경직시킴",
+          "혈류의 정체 : 격렬한 움직임 끝에 쉽게 탈진해 버리는 한계"
+        ],
+        benefits: [
+          "불멸의 맥동 : 어떠한 극한 상황에서도 일정하고 묵직하게 뛰는 강철의 심장",
+          "무결한 평정 : 공포와 죄책감이 완전히 소거된 완벽한 심리적 해방",
+          "무한한 활력 : 일반인의 수 배에 달하는 정제된 혈류를 온몸에 순환시킴"
+        ],
+        scripture: "\"두려움에 떨던 짐승의 심장을 버려라. 무결의 심장이 뛰는 한 그대는 결코 무릎 꿇지 않으리라.\""
+      },
+      spine: {
+        code: "第四啓示 · 龍骨再鑄",
+        title: "척추 (龍骨) — 中樞의 覺醒",
+        risk: "시술 난이도 : 上 (骨髓)",
+        flaws: [
+          "굽은 굴종 : 중력을 이기지 못하고 쉽게 휘어지며 고통을 호소하는 뼈대",
+          "신경 전달의 지연 : 뇌의 명령이 사지에 닿기까지 발생하는 치명적인 시차",
+          "외부 충격에의 취약함 : 단 한 번의 타격으로 전신이 마비되는 조악한 구조"
+        ],
+        benefits: [
+          "강철의 기둥 : 어떠한 중압감 속에서도 꼿꼿이 서서 자세를 흐트러뜨리지 않음",
+          "찰나의 신경 전달 : 사고함과 동시에 육신이 움직이는 빛의 반응 속도",
+          "고통의 차단 : 육신의 손상을 불쾌한 통증이 아닌 단순한 정보로만 인식함"
+        ],
+        scripture: "\"척추는 하늘과 땅을 잇는 기둥이라. 낡은 뼈마디를 금강으로 벼려내어 천당의 무게를 지탱하라.\""
+      },
+      arms: {
+        code: "第五啓示 · 神技鑄造",
+        title: "상지 (手腕) — 執行의 權能",
+        risk: "시술 난이도 : 中 (匠人)",
+        flaws: [
+          "느린 반응 : 긴장 속에서 정교함을 잃고 실수를 범하는 불완전한 근섬유",
+          "무딘 감각과 한계 : 조금만 무거운 것을 쥐어도 쉽게 피로해지는 완력",
+          "유약한 피부 : 날카로운 것 앞에서 속수무책으로 찢어지는 연약함"
+        ],
+        benefits: [
+          "번개 같은 집행 : 도사의 명을 받들어 어떠한 망설임도 없이 과업을 완수함",
+          "강철의 악력 : 한 번 움켜쥔 것은 결코 놓지 않는 압도적인 파쇄력",
+          "절대적 정밀 : 머리카락 한 올의 오차도 허용하지 않는 완벽한 통제력"
+        ],
+        scripture: "\"속세의 흙을 만지던 더러운 손을 씻고, 신의 뜻을 집행하는 정교한 병기로 거듭나라.\""
+      },
+      legs: {
+        code: "第六啓示 · 疾風步法",
+        title: "하지 (脚部) — 重力의 超越",
+        risk: "시술 난이도 : 中 (匠人)",
+        flaws: [
+          "무거운 발걸음 : 진리를 향해 나아가려 해도 발목을 붙잡는 둔중한 보폭",
+          "지상에 묶인 한계 : 높은 벽을 넘지 못하고 땅바닥을 기어 다니는 굴레",
+          "쉽게 지치는 보법 : 먼 길을 걷지 못하고 주저앉아 버리는 하체의 나약함"
+        ],
+        benefits: [
+          "무형의 도약 : 찰나의 순간에 거리를 좁히며 적의 시야에서 사라지는 기동성",
+          "지치지 않는 보법 : 밤낮을 가리지 않고 성소의 명을 따라 내달리는 영속성",
+          "무음의 발걸음 : 한지 위를 걸어도 바스락거리는 소리조차 남기지 않는 은밀함"
+        ],
+        scripture: "\"느리고 무거운 발걸음으로는 결코 천당에 닿을 수 없나니, 바람을 가르는 다리로 속박을 벗어나라.\""
+      }
+    };
+
+    let memberDeleteMode = false;
+    let memberEditSelectMode = false;
+    let noticeDeleteMode = false;
+    let pendingAdminCallback = null;
+    let currentFocusedMemberId = null;
+
+    function showToast(msg) {
+      const toast = document.getElementById('sync-toast');
+      toast.textContent = msg;
+      toast.classList.remove('hidden');
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 2200);
+    }
+
+    function getDbBaseUrl() {
+      return FIREBASE_DB_URL.trim().replace(/\/+$/, '');
+    }
+
+    function normalizeArrayFromDb(raw, fallback) {
+      if (!raw) return null;
+      if (Array.isArray(raw)) {
+        return raw.filter(Boolean);
+      }
+      if (typeof raw === 'object') {
+        return Object.values(raw).filter(Boolean);
+      }
+      return fallback;
+    }
+
+    async function loadSharedDataFromCloud() {
+      const baseUrl = getDbBaseUrl();
+      if (!baseUrl) {
+        return;
+      }
+
+      try {
+        showToast('성전 기록 불러오는 중...');
+        const [mRes, nRes] = await Promise.all([
+          fetch(`${baseUrl}/members.json`),
+          fetch(`${baseUrl}/notices.json`)
+        ]);
+
+        const mData = mRes.ok ? await mRes.json() : null;
+        const nData = nRes.ok ? await nRes.json() : null;
+
+        const parsedMembers = normalizeArrayFromDb(mData, null);
+        const parsedNotices = normalizeArrayFromDb(nData, null);
+
+        if (parsedMembers && parsedMembers.length > 0) {
+          members = parsedMembers;
+        } else {
+          members = [...DEFAULT_MEMBERS];
+          await saveMembersToCloud();
+        }
+
+        if (parsedNotices && parsedNotices.length > 0) {
+          notices = parsedNotices;
+        } else {
+          notices = [...DEFAULT_NOTICES];
+          await saveNoticesToCloud();
+        }
+
+        renderMembers();
+        renderNotices();
+        showToast('성전 기록 동기화 완료');
+      } catch (err) {
+        console.error(err);
+        showToast('데이터베이스 연결 확인 필요');
+      }
+    }
+
+    async function saveMembersToCloud() {
+      const baseUrl = getDbBaseUrl();
+      if (!baseUrl) {
+        showToast('FIREBASE_DB_URL을 먼저 입력하세요');
+        return;
+      }
+      try {
+        showToast('단원 명부 저장 중...');
+        const res = await fetch(`${baseUrl}/members.json`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(members)
+        });
+        if (!res.ok) throw new Error('Failed to save members');
+        showToast('단원 명부가 모두에게 반영되었습니다');
+      } catch (err) {
+        console.error(err);
+        showToast('명부 저장 실패 (Firebase 규칙 확인)');
+      }
+    }
+
+    async function saveNoticesToCloud() {
+      const baseUrl = getDbBaseUrl();
+      if (!baseUrl) {
+        showToast('FIREBASE_DB_URL을 먼저 입력하세요');
+        return;
+      }
+      try {
+        showToast('성전 포고 저장 중...');
+        const res = await fetch(`${baseUrl}/notices.json`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(notices)
+        });
+        if (!res.ok) throw new Error('Failed to save notices');
+        showToast('안내 사항이 모두에게 반영되었습니다');
+      } catch (err) {
+        console.error(err);
+        showToast('포고 저장 실패 (Firebase 규칙 확인)');
+      }
+    }
+
+    function fillDemoCode(code) {
+      document.getElementById('auth-input').value = code;
+      document.getElementById('auth-error').textContent = '';
+    }
+
+    document.getElementById('auth-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const inputVal = document.getElementById('auth-input').value.trim();
+      const errorEl = document.getElementById('auth-error');
+
+      if (!inputVal) {
+        errorEl.textContent = '성명 또는 성전 부호(到天堂)를 기입하십시오.';
+        return;
+      }
+
+      // 최신 단원 명부 기준으로 이름 확인
+      if (getDbBaseUrl()) {
+        await loadSharedDataFromCloud();
+      }
+
+      const matchedMember = members.find((m) => m.name === inputVal);
+      if (inputVal === PILGRIM_CODE || matchedMember) {
+        errorEl.textContent = '';
+        document.getElementById('auth-screen').classList.add('hidden');
+        document.getElementById('main-app').classList.remove('hidden');
+
+        const badge = document.getElementById('visitor-badge');
+        if (matchedMember) {
+          badge.textContent = `${matchedMember.name} · ${matchedMember.role}`;
+        } else {
+          badge.textContent = '순례자 (到天堂)';
+        }
+
+        selectBodyPart('brain');
+        renderMembers();
+        renderNotices();
+      } else {
+        errorEl.textContent = '명부에 없는 이름이거나 그릇된 부호입니다. 성전의 문이 열리지 않습니다.';
+      }
+    });
+
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-panel').forEach((panel) => {
+        panel.classList.add('hidden');
+      });
+      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+
+      document.querySelectorAll('.nav-tab').forEach((btn) => {
+        if (btn.dataset.tab === tabName) {
+          btn.classList.add('font-semibold', 'text-[#7B1113]', 'bg-[#7B1113]/10', 'border', 'border-[#7B1113]/30');
+          btn.classList.remove('text-[#57534E]');
+        } else {
+          btn.classList.remove('font-semibold', 'text-[#7B1113]', 'bg-[#7B1113]/10', 'border', 'border-[#7B1113]/30');
+          btn.classList.add('text-[#57534E]');
+        }
+      });
+
+      resetMemberModes();
+      noticeDeleteMode = false;
+      renderNotices();
+
+      if ((tabName === 'members' || tabName === 'notices') && getDbBaseUrl()) {
+        loadSharedDataFromCloud();
+      }
+    }
+
+    function selectBodyPart(partKey) {
+      const data = REVELATION_DATA[partKey];
+      if (!data) return;
+
+      document.getElementById("detail-code").textContent = data.code;
+      document.getElementById("detail-title").textContent = data.title;
+      document.getElementById("detail-risk").textContent = data.risk;
+
+      document.getElementById("detail-flaws").innerHTML = data.flaws
+        .map(item => `<li>• ${item}</li>`)
+        .join("");
+
+      document.getElementById("detail-benefits").innerHTML = data.benefits
+        .map(item => `<li>✦ ${item}</li>`)
+        .join("");
+
+      document.getElementById("detail-scripture").textContent = data.scripture;
+
+      document.querySelectorAll(".part-btn").forEach(btn => {
+        const isSelected = btn.getAttribute("data-btn") === partKey;
+        if (isSelected) {
+          btn.classList.remove("bg-[#FAF7F1]", "text-[#1D1A18]");
+          btn.classList.add("bg-[#7A1515]", "text-[#F9F6F0]");
+        } else {
+          btn.classList.remove("bg-[#7A1515]", "text-[#F9F6F0]");
+          btn.classList.add("bg-[#FAF7F1]", "text-[#1D1A18]");
+        }
+      });
+    }
+
+    function getRoleColorClass(role) {
+      if (role === '도사') return 'text-[#A88438] border-[#A88438]/60 bg-[#A88438]/10';
+      return 'text-[#7B1113] border-[#7B1113]/50 bg-[#7B1113]/10';
+    }
+
+    function getRoleTextColor(role) {
+      return role === '도사' ? 'text-[#A88438]' : 'text-[#7B1113]';
+    }
+
+    function renderMembers() {
+      const grid = document.getElementById('members-grid');
+      grid.innerHTML = '';
+
+      members.forEach((member) => {
+        const card = document.createElement('div');
+        card.className =
+          'hanji-card p-6 rounded-sm relative cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:border-[#7B1113]/60 group';
+
+        card.onclick = function () {
+          if (memberDeleteMode) {
+            requestAdminAuth(async () => {
+              members = members.filter((m) => m.id !== member.id);
+              renderMembers();
+              await saveMembersToCloud();
+            });
+            return;
+          }
+          if (memberEditSelectMode) {
+            requestAdminAuth(() => {
+              openMemberEditModal(member.id);
+            });
+            return;
+          }
+          openMemberFocus(member.id);
+        };
+
+        const roleBadgeClass = getRoleColorClass(member.role);
+        const roleTextClass = getRoleTextColor(member.role);
+
+        card.innerHTML = `
+          ${
+            memberDeleteMode
+              ? `<span class="absolute top-3 right-3 px-2 py-0.5 text-[11px] font-bold bg-[#7B1113] text-[#F8F5EE] rounded-sm">삭제</span>`
+              : memberEditSelectMode
+              ? `<span class="absolute top-3 right-3 px-2 py-0.5 text-[11px] font-bold bg-[#A88438] text-[#F8F5EE] rounded-sm">수정 선택</span>`
+              : `<span class="absolute top-3.5 right-3.5 text-[11px] text-[#A88438] opacity-0 group-hover:opacity-100 transition-opacity">熱覽 ↗</span>`
+          }
+          <div class="flex items-center gap-4">
+            <div class="circle-stamp w-12 h-12 shrink-0 font-bold text-base">
+              ${member.name.charAt(0)}
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-lg font-bold tracking-[0.14em] text-[#1C1917]">${member.name}</h3>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-full border ${roleBadgeClass}">
+                  ${member.role}
+                </span>
+              </div>
+              <p class="text-xs ${roleTextClass} font-medium mt-1">${member.title}</p>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#A88438]/25 flex items-center justify-between text-[11px] text-[#78716C]">
+            <span>성전 기록 봉인됨</span>
+            <span class="tracking-widest text-[#7B1113]/80">누르면 세부 열람</span>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    function openMemberFocus(memberId) {
+      const member = members.find((m) => m.id === memberId);
+      if (!member) return;
+
+      currentFocusedMemberId = memberId;
+      const roleBadgeClass = getRoleColorClass(member.role);
+      const roleTextClass = getRoleTextColor(member.role);
+
+      const contentEl = document.getElementById('member-focus-content');
+      contentEl.innerHTML = `
+        <div class="flex items-center gap-4 border-b border-[#A88438]/35 pb-5 pr-8">
+          <div class="circle-stamp w-16 h-16 shrink-0 font-bold text-2xl">
+            ${member.name.charAt(0)}
+          </div>
+          <div>
+            <div class="flex items-center gap-2.5">
+              <h3 class="text-2xl font-bold tracking-[0.18em] text-[#1C1917]">${member.name}</h3>
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded-full border ${roleBadgeClass}">
+                ${member.role}
+              </span>
+            </div>
+            <p class="text-sm ${roleTextClass} font-semibold mt-1">${member.title}</p>
+          </div>
+        </div>
+
+        <div class="mt-5 space-y-4 text-sm">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-[#F8F5EE] p-3.5 rounded-sm border border-[#A88438]/30">
+            <div>
+              <span class="block text-[11px] text-[#78716C]">계시 시술 부위</span>
+              <span class="font-semibold text-[#7B1113] mt-0.5 block">${member.surgery || '미기록'}</span>
+            </div>
+            <div>
+              <span class="block text-[11px] text-[#78716C]">담당 성소 · 구역</span>
+              <span class="font-semibold text-[#1C1917] mt-0.5 block">${member.sanctum || '성전 내원'}</span>
+            </div>
+          </div>
+
+          <div>
+            <span class="block text-xs tracking-widest text-[#A88438] font-semibold mb-1.5">세부 계시 기록</span>
+            <p class="text-[#292524] leading-relaxed bg-[#FCFBF7] p-3.5 border border-[#A88438]/25 rounded-sm">
+              ${member.detail || '기록된 세부 행적이 없습니다.'}
+            </p>
+          </div>
+
+          ${
+            member.quote
+              ? `<blockquote class="border-l-2 border-[#7B1113] pl-3.5 py-1 italic text-xs text-[#57534E]">
+                  “${member.quote}”
+                </blockquote>`
+              : ''
+          }
+        </div>
+      `;
+
+      document.getElementById('focus-edit-trigger').onclick = function (e) {
+        if (e) e.stopPropagation();
+        const targetId = currentFocusedMemberId;
+        closeMemberFocus();
+        requestAdminAuth(() => {
+          openMemberEditModal(targetId);
+        });
+      };
+
+      document.getElementById('member-focus-backdrop').classList.remove('hidden');
+      document.getElementById('member-focus-layer').classList.remove('hidden');
+    }
+
+    function closeMemberFocus(e) {
+      if (e) e.stopPropagation();
+      currentFocusedMemberId = null;
+      document.getElementById('member-focus-backdrop').classList.add('hidden');
+      document.getElementById('member-focus-layer').classList.add('hidden');
+    }
+
+    function toggleToolbar(toolbarId) {
+      const el = document.getElementById(toolbarId);
+      el.classList.toggle('hidden');
+    }
+
+    function resetMemberModes() {
+      memberDeleteMode = false;
+      memberEditSelectMode = false;
+      document.getElementById('member-mode-banner').classList.add('hidden');
+      renderMembers();
+    }
+
+    function toggleMemberDeleteMode() {
+      memberDeleteMode = !memberDeleteMode;
+      memberEditSelectMode = false;
+      const banner = document.getElementById('member-mode-banner');
+      if (memberDeleteMode) {
+        banner.classList.remove('hidden');
+        document.getElementById('member-mode-text').textContent = '삭제할 단원 상자를 선택하십시오 (관리자 코드 필요).';
+      } else {
+        banner.classList.add('hidden');
+      }
+      renderMembers();
+    }
+
+    function toggleMemberEditSelectMode() {
+      memberEditSelectMode = !memberEditSelectMode;
+      memberDeleteMode = false;
+      const banner = document.getElementById('member-mode-banner');
+      if (memberEditSelectMode) {
+        banner.classList.remove('hidden');
+        document.getElementById('member-mode-text').textContent = '정보를 수정할 단원 상자를 선택하십시오 (관리자 코드 필요).';
+      } else {
+        banner.classList.add('hidden');
+      }
+      renderMembers();
+    }
+
+    function openMemberAddModal() {
+      resetMemberModes();
+      document.getElementById('member-toolbar').classList.add('hidden');
+      requestAdminAuth(() => {
+        document.getElementById('member-form-title').textContent = '새 단원 등록';
+        document.getElementById('edit-member-id').value = '';
+        document.getElementById('member-editor-form').reset();
+        document.getElementById('member-form-modal').classList.remove('hidden');
+      });
+    }
+
+    function openMemberEditModal(memberId) {
+      const member = members.find((m) => m.id === memberId);
+      if (!member) return;
+
+      resetMemberModes();
+      document.getElementById('member-toolbar').classList.add('hidden');
+      document.getElementById('member-form-title').textContent = `단원 기록 수정 — ${member.name}`;
+      document.getElementById('edit-member-id').value = member.id;
+      document.getElementById('m-name').value = member.name;
+      document.getElementById('m-role').value = member.role;
+      document.getElementById('m-title').value = member.title;
+      document.getElementById('m-surgery').value = member.surgery || '';
+      document.getElementById('m-sanctum').value = member.sanctum || '';
+      document.getElementById('m-detail').value = member.detail || '';
+      document.getElementById('m-quote').value = member.quote || '';
+      document.getElementById('member-form-modal').classList.remove('hidden');
+    }
+
+    function closeMemberFormModal() {
+      document.getElementById('member-form-modal').classList.add('hidden');
+    }
+
+    document.getElementById('member-editor-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const idVal = document.getElementById('edit-member-id').value;
+      const payload = {
+        name: document.getElementById('m-name').value.trim(),
+        role: document.getElementById('m-role').value,
+        title: document.getElementById('m-title').value.trim(),
+        surgery: document.getElementById('m-surgery').value.trim(),
+        sanctum: document.getElementById('m-sanctum').value.trim(),
+        detail: document.getElementById('m-detail').value.trim(),
+        quote: document.getElementById('m-quote').value.trim()
+      };
+
+      if (idVal) {
+        const idx = members.findIndex((m) => m.id === Number(idVal));
+        if (idx !== -1) {
+          members[idx] = { ...members[idx], ...payload };
+        }
+      } else {
+        members.push({ id: Date.now(), ...payload });
+      }
+
+      closeMemberFormModal();
+      renderMembers();
+      await saveMembersToCloud();
+    });
+
+    function renderNotices() {
+      const list = document.getElementById('notices-list');
+      list.innerHTML = '';
+
+      notices.forEach((notice) => {
+        const item = document.createElement('article');
+        item.className =
+          'hanji-card p-6 rounded-sm relative cursor-pointer transition-all hover:border-[#7B1113]/60 group';
+
+        item.onclick = function () {
+          if (noticeDeleteMode) {
+            requestAdminAuth(async () => {
+              notices = notices.filter((n) => n.id !== notice.id);
+              renderNotices();
+              await saveNoticesToCloud();
+            });
+            return;
+          }
+          requestAdminAuth(() => {
+            openNoticeModal(notice.id);
+          });
+        };
+
+        item.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+            <div class="flex items-center gap-2.5">
+              <span class="text-[11px] font-bold tracking-wider px-2.5 py-0.5 bg-[#7B1113]/10 text-[#7B1113] border border-[#7B1113]/35 rounded-sm">
+                ${notice.tag}
+              </span>
+              <span class="text-xs text-[#78716C]">${notice.date}</span>
+            </div>
+            ${
+              noticeDeleteMode
+                ? `<span class="px-2.5 py-0.5 text-[11px] font-bold bg-[#7B1113] text-[#F8F5EE] rounded-sm">삭제</span>`
+                : `<span class="text-[11px] text-[#A88438] opacity-0 group-hover:opacity-100 transition-opacity">누르면 수정 (관리자 인증)</span>`
+            }
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-[#1C1917] tracking-wide group-hover:text-[#7B1113] transition-colors">
+            ${notice.title}
+          </h3>
+          <p class="text-sm text-[#44403C] mt-2 leading-relaxed whitespace-pre-line">
+            ${notice.content}
+          </p>
+        `;
+
+        list.appendChild(item);
+      });
+    }
+
+    function toggleNoticeDeleteMode() {
+      noticeDeleteMode = !noticeDeleteMode;
+      renderNotices();
+    }
+
+    function openNoticeModal(noticeId) {
+      document.getElementById('notice-toolbar').classList.add('hidden');
+      if (noticeId === null) {
+        requestAdminAuth(() => {
+          document.getElementById('notice-form-title').textContent = '새 성전 포고 작성';
+          document.getElementById('edit-notice-id').value = '';
+          document.getElementById('notice-editor-form').reset();
+          document.getElementById('n-date').value = '丙午年 今月';
+          document.getElementById('notice-form-modal').classList.remove('hidden');
+        });
+      } else {
+        const notice = notices.find((n) => n.id === noticeId);
+        if (!notice) return;
+        document.getElementById('notice-form-title').textContent = '성전 포고 수정';
+        document.getElementById('edit-notice-id').value = notice.id;
+        document.getElementById('n-tag').value = notice.tag;
+        document.getElementById('n-date').value = notice.date;
+        document.getElementById('n-title').value = notice.title;
+        document.getElementById('n-content').value = notice.content;
+        document.getElementById('notice-form-modal').classList.remove('hidden');
+      }
+    }
+
+    function closeNoticeModal() {
+      document.getElementById('notice-form-modal').classList.add('hidden');
+    }
+
+    document.getElementById('notice-editor-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const idVal = document.getElementById('edit-notice-id').value;
+      const payload = {
+        tag: document.getElementById('n-tag').value,
+        date: document.getElementById('n-date').value.trim() || '丙午年',
+        title: document.getElementById('n-title').value.trim(),
+        content: document.getElementById('n-content').value.trim()
+      };
+
+      if (idVal) {
+        const idx = notices.findIndex((n) => n.id === Number(idVal));
+        if (idx !== -1) {
+          notices[idx] = { ...notices[idx], ...payload };
+        }
+      } else {
+        notices.unshift({ id: Date.now(), ...payload });
+      }
+
+      closeNoticeModal();
+      renderNotices();
+      await saveNoticesToCloud();
+    });
+
+    function requestAdminAuth(onSuccess) {
+      pendingAdminCallback = onSuccess;
+      document.getElementById('admin-code-input').value = '';
+      document.getElementById('admin-code-error').textContent = '';
+      document.getElementById('admin-code-modal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('admin-code-input').focus(), 50);
+    }
+
+    function closeAdminModal() {
+      pendingAdminCallback = null;
+      document.getElementById('admin-code-modal').classList.add('hidden');
+    }
+
+    function submitAdminCode() {
+      const val = document.getElementById('admin-code-input').value.trim();
+      if (val === ADMIN_SECRET) {
+        const cb = pendingAdminCallback;
+        closeAdminModal();
+        if (typeof cb === 'function') cb();
+      } else {
+        document.getElementById('admin-code-error').textContent = '관리자 부호가 일치하지 않습니다.';
+      }
+    }
+
+    document.getElementById('admin-code-input').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        submitAdminCode();
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeMemberFocus();
+        closeAdminModal();
+        closeMemberFormModal();
+        closeNoticeModal();
+      }
+    });
+  </script>
+</body>
+</html>
